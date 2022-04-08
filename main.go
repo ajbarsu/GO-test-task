@@ -5,13 +5,21 @@ import (
 	"net/http"
 )
 
+// Home creates the server's homepage
+func Home(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "A simple HTTP server's homepage")
+}
+
+// Users shows the users' array at /users
+func Users(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "A list of users")
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		n, err := fmt.Fprintf(w, "A simple HTTP server")
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Printf(fmt.Sprintf("Number of bytes written: %d", n))
-	})
+
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/users", Users)
+
 	_ = http.ListenAndServe(":80", nil)
+
 }
